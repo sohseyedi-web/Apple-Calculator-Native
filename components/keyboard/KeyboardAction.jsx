@@ -5,13 +5,18 @@ import { useCalculator } from "../../context/CalculatorProvider";
 
 const KeyboardAction = () => {
   const { width } = useWindowDimensions();
-  const {clearLabel} = useCalculator()
+  const { clearLabel } = useCalculator();
   const btnWidth = width / 4 - 5;
 
   return (
     <View style={styles.keyboard}>
       <View style={styles.btnRow}>
-        <BtnAction title={clearLabel} w={btnWidth} bg="#a5a5a5" textColor={"#000"} />
+        <BtnAction
+          title={clearLabel}
+          w={btnWidth}
+          bg="#a5a5a5"
+          textColor={"#000"}
+        />
         <BtnAction title={"+/-"} w={btnWidth} bg="#a5a5a5" textColor={"#000"} />
         <BtnAction title={"%"} w={btnWidth} bg="#a5a5a5" textColor={"#000"} />
         <BtnAction title={"÷"} w={btnWidth} bg="#ff9f0c" />
@@ -20,7 +25,7 @@ const KeyboardAction = () => {
         <BtnAction title={"7"} w={btnWidth} />
         <BtnAction title={"8"} w={btnWidth} />
         <BtnAction title={"9"} w={btnWidth} />
-        <BtnAction title={"×"} w={btnWidth} bg="#ff9f0c" />
+        <BtnAction title={"x"} w={btnWidth} bg="#ff9f0c" />
       </View>
       <View style={styles.btnRow}>
         <BtnAction title={"4"} w={btnWidth} />
