@@ -15,11 +15,12 @@ const BtnAction = ({
   const pl = zero ? 0 : 26;
 
   const { onKeyPress } = useCalculator();
+  const value = title === "÷" ? "/" : title
 
   return (
     <View style={[styles.wrapper, { width: width, height: height }]}>
       <TouchableOpacity
-        onPress={() => onKeyPress(title)}
+        onPress={() => onKeyPress(value)}
         style={[
           styles.btn,
           { backgroundColor: bg, alignItems: alignItem, paddingLeft: pl },
