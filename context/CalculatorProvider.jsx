@@ -3,50 +3,37 @@ import React, { createContext, useContext, useState } from "react";
 const CalculatorContext = createContext();
 
 export const CalculatorProvider = ({ children }) => {
-  const [firstValue, setFirstValue] = useState("");
-  const [operator, setOperator] = useState("");
-  const [secondValue, setSecondValue] = useState("");
+  const [expression, setExpression] = useState("");
   const [clearLabel, setClearLabel] = useState("AC");
+  const [result, setResult] = useState("12345678901123561966");
 
   const onKeyPress = (key) => {
     switch (key) {
       case "AC":
-        setFirstValue("");
-        setOperator("");
-        setSecondValue("");
+        setExpression("");
+        setResult("0");
         break;
       case "C":
-        if (secondValue !== "") {
-          setSecondValue("");
-        } else {
-          setFirstValue("");
-        }
+        setExpression((prev) => prev.slice(0, -1));
         setClearLabel("AC");
         break;
       case "+/-":
-        if (firstValue !== "" || secondValue !== "") {
-          if (firstValue !== "" && secondValue === "") {
-            setFirstValue(parseFloat(firstValue * -1).toString());
-          } else {
-            setSecondValue(parseFloat(secondValue * -1).toString());
-          }
+        if (result !== "0" && result !== "Error") {
+          const newResult = (parseFloat(result.replace(".")) * -1).toString();
+          setResult(newResult.replace("."));
         }
         break;
       case "%":
-        calculate(firstValue, key, secondValue);
+        calculate(expression + " %");
         break;
       case "/":
       case "x":
       case "-":
       case "+":
-        if (secondValue !== "") {
-          calculate(firstValue, operator, secondValue);
-        } else {
-          setOperator(key);
-        }
+        setExpression((prev) => `${prev} ${key} `);
         break;
       case "=":
-        calculate(firstValue, operator, secondValue);
+        calculate(expression);
         break;
       case "1":
       case "2":
@@ -60,68 +47,28 @@ export const CalculatorProvider = ({ children }) => {
       case "0":
       case ",":
         setClearLabel("C");
-        if (operator === "") {
-          setFirstValue((e) => `${e}${key}`);
-        } else {
-          setSecondValue((e) => `${e}${key}`);
-        }
+        setExpression((prev) => prev + key);
         break;
     }
   };
 
-  const getDisplayText = () => {
-    if (secondValue !== "") return secondValue;
-    if (firstValue === "") return "0";
-    return firstValue;
-  };
-
-  const calculate = (a = "", o = "", b = "") => {
-    let result = 0;
-
-    a = a.replace(",", ".");
-    b = b.replace(",", ".");
-
-    switch (o) {
-      case "%":
-        result = parseFloat(a) / 100;
-        break;
-      case "/":
-        result = parseFloat(a) / parseFloat(b);
-        break;
-      case "x":
-        result = parseFloat(a) * parseFloat(b);
-        break;
-      case "-":
-        result = parseFloat(a) - parseFloat(b);
-        break;
-      case "+":
-        result = parseFloat(a) + parseFloat(b);
-        break;
+  const calculate = (exp) => {
+    let formattedExp = exp.replace(/x/g, "*").replace(/,/g, ".");
+    try {
+      let result = eval(formattedExp);
+      setResult(result.toString().replace(".", ","));
+    } catch (error) {
+      setResult("Error");
     }
-
-    if (result % 1 !== 0) {
-      const digitsValue = result.toString().split(".")[1];
-      if (digitsValue.length > 6) {
-        result = result.toFixed(6);
-      }
-    }
-
-    result = result.toString().replace(".", ",");
-
-    setFirstValue(result);
-    setOperator("");
-    setSecondValue("");
   };
 
   return (
     <CalculatorContext.Provider
       value={{
-        firstValue,
-        secondValue,
-        operator,
+        expression,
+        result,
         clearLabel,
         onKeyPress,
-        getDisplayText,
       }}
     >
       {children}
