@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useCalculator } from "../../context/CalculatorProvider";
+import numberWithCommas from "../../utils/comma";
+import { getDynamicTextSize } from "../../utils/dynamicFontSize";
 
 const ScreenAction = () => {
-  const { getDisplayText, operator } = useCalculator();
+  const { expression, result } = useCalculator();
 
   return (
     <View style={styles.box}>
-      <Text style={styles.operator}>{operator}</Text>
-      <Text style={styles.text}>{getDisplayText()}</Text>
+      <Text style={styles.operator}>{expression}</Text>
+      <Text style={{color : "#fff" , fontSize:getDynamicTextSize(result)}}>{numberWithCommas(result)}</Text>
     </View>
   );
 };
@@ -17,17 +19,13 @@ export default ScreenAction;
 const styles = StyleSheet.create({
   box: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "flex-end",
+    justifyContent:"flex-end",
     paddingHorizontal: 25,
   },
-  text: {
-    color: "#fff",
-    fontSize: 90,
-  },
+  
   operator: {
-    color: "#fff",
-    fontSize: 40,
+    color: "#eee",
+    fontSize:16,
   },
 });
