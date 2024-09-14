@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import { useCalculator } from "../../context/CalculatorProvider";
 
 const BtnAction = ({
   w = 0,
@@ -13,9 +14,12 @@ const BtnAction = ({
   const alignItem = zero ? "center" : "flex-start";
   const pl = zero ? 0 : 26;
 
+  const { onKeyPress } = useCalculator();
+
   return (
     <View style={[styles.wrapper, { width: width, height: height }]}>
       <TouchableOpacity
+        onPress={() => onKeyPress(title)}
         style={[
           styles.btn,
           { backgroundColor: bg, alignItems: alignItem, paddingLeft: pl },
