@@ -1,5 +1,4 @@
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
-import React from "react";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import BtnAction from "./BtnAction";
 import { useCalculator } from "../../context/CalculatorProvider";
 
