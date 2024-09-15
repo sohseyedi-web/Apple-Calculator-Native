@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "CalculatorApp",
-    "slug": "CalculatorApp",
+    "name": "CalculatorApple",
+    "slug": "calculator-apple",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "budjet-app",
+    "scheme": "calculator-apple",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,20 +20,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.sohseyedi.CalculatorApp"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router",
-      [
-        "expo-font",
-        {
-          "fonts": ["./assets/fonts/Vazir.ttf"]
-        }
-      ]
-    ]
+      "expo-router"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4fba67df-4401-4aef-8b93-fd61d7cdeed2"
+      }
+    },
+    "owner": "sohseyedi"
   }
 }
